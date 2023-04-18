@@ -42,7 +42,14 @@ public class Stack<S> {
     }
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (this.getClass() != obj.getClass()) return false;
+        
+        Stack<?> s = (Stack<?>)obj;
+        if (!this.stack.equals(s.stack)) return false;
+        if (this.last != s.last) return false;
+        return true;
     }
     @Override
     public int hashCode() {
@@ -60,11 +67,4 @@ public class Stack<S> {
 
         return message;
     }
-
-    // @Override 
-    // public String toString() {
-    //     return "" + this.peek(); 
-    // }
-    
-
 }

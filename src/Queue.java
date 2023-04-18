@@ -1,7 +1,4 @@
-// QUEUE: First in first out FIFO
-
 import java.nio.file.ClosedWatchServiceException;
-
 public class Queue <Q> implements Cloneable {
     private Vector<Object> queue;
     private int first = 0;
@@ -16,7 +13,7 @@ public class Queue <Q> implements Cloneable {
 
         this.queue = new Vector<Object>(limit);
     }
-    // CONSTRUTOR DE CÓPIA
+
     private Queue(Vector<Object> queue) throws Exception{
         if (queue == null)
             throw new Exception("Queue cannot be null");
@@ -33,22 +30,19 @@ public class Queue <Q> implements Cloneable {
     }
 
     public void pop() throws Exception {
-        int size = this.queue.getFirstFreeIndex(); // spaces taken in the array
+        int size = this.queue.getFirstFreeIndex(); 
         if(size == -1)
-            size = this.queue.getSize(); // if no more spaces avaiable (returns -1) same as array's final size
+            size = this.queue.getSize(); 
         for (int i = 0; i < size; i++)
             if (i == this.queue.getSize() -1)
                 this.queue.set(i, null);
             else 
-                this.queue.set(i, this.queue.peek(i+1)); // logic to make all elements 'take one step foward when first removed'
+                this.queue.set(i, this.queue.peek(i+1)); 
     
         if (size < this.queue.getSize() * 0.75)
             this.queue.resizeDown();
     }
 
-    
-    //toString() must return this.queue.peek(), however in type of String - but im just testing for now 
-    
     @Override
     public String toString() {
         String message = "[ ";
@@ -59,11 +53,6 @@ public class Queue <Q> implements Cloneable {
         return message;
     }
     
-
-    // @Override
-    // public String toString() {
-    //     return "" + this.peek();
-    // }
     @Override
     public int hashCode() {
         int hash = 2;
@@ -96,8 +85,3 @@ public class Queue <Q> implements Cloneable {
         }
     }
 }
-
-/*guardeUmItem()
- * removaUmItem()
- * recupereUmItem()
- */
