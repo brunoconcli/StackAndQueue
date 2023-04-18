@@ -85,6 +85,12 @@ public class Vector<V> implements Cloneable {
         return this.array.length;
     }
 
+    public boolean isEmpty() {
+        for (Object i : this.array)
+            if (i != null)
+                return false;
+        return true;
+    }
     public void resize() throws Exception{
         resize((float)1.5);
     }

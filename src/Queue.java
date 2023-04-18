@@ -43,6 +43,10 @@ public class Queue <Q> implements Cloneable {
             this.queue.resizeDown();
     }
 
+    public boolean isEmpty() {
+        return this.queue.isEmpty();
+    }
+    
     @Override
     public String toString() {
         String message = "[ ";

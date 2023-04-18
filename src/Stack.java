@@ -32,6 +32,10 @@ public class Stack<S> {
             this.stack.resizeDown();
     }
 
+    public boolean isEmpty() {
+        return this.stack.isEmpty();
+    }
+    
     @Override
     protected Object clone() throws CloneNotSupportedException {
         try {
