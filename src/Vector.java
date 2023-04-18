@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Vector<V> implements Cloneable {
     private Object[] array;
     public final boolean ISLIMITED;
@@ -83,31 +85,23 @@ public class Vector<V> implements Cloneable {
         return this.array.length;
     }
 
-    // 50% = 50/100 = 0.5
     public void resize() throws Exception{
-        resize((float)1.5); // É necessário ser lançada a exceção por conta de resize()
+        resize((float)1.5);
     }
     
-    // 1 exceções 
-    // 2 backup (uma cópia da array antiga/inicial)
-    // 3 aumenta o tamanho da array original
-    // 4 repassa os dados do array backup para o com tamanho aumentado 
     public void resize(float percent) throws Exception {
-        // 1
+
         if (percent < 0) 
         throw new Exception("Growth percentage must not be lower than 0");
         if (this.ISLIMITED)
         throw new Exception("Vector length is limited");
         
-        // 2
         Object[] backup = this.array;
         
-        // 3
-        this.array = new Object[Math.round(backup.length * percent)]; // this.array é reinstanciado para um novo tamanho
+        this.array = new Object[Math.round(backup.length * percent)];
         
-        // 4
         for (int i = 0; i < backup.length; i++) {
-            this.array[i] = backup[i]; // depois recebe de volta o que foi guardado em oldArray
+            this.array[i] = backup[i]; 
         }
     }
 
@@ -123,12 +117,27 @@ public class Vector<V> implements Cloneable {
         Object[] oldArray = this.array;
         this.array = new Object[(int) Math.ceil(oldArray.length * percent)];
 
-        // System.arraycopy(this.array, 0, oldArray, this.getSize(), 0);
 
         for (int i = 0; i < this.getSize(); i++) 
             this.array[i] = oldArray[i];
     }
+    @Override
+    public int hashCode() {
+        int hash = 2;
+        hash = 3 * hash + Arrays.hashCode(this.array);
+        hash = 5 * hash + (this.ISLIMITED ? 1 : 0);
 
+        if (hash < 0) hash = hash * -1;
+        return super.hashCode();
+    }
+    @Override
+    public String toString() {
+        StringBuilder message = new StringBuilder();
+        for (int i = 0; i < this.array.length; i++) {
+            message.append(this.array[i] + " ");
+        }
+        return message.toString();
+    }
     @Override
     public Object clone() throws CloneNotSupportedException{
         return new Vector<V>(array, ISLIMITED);
