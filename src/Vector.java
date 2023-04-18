@@ -139,6 +139,22 @@ public class Vector<V> implements Cloneable {
         return message.toString();
     }
     @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (this == obj) return true;
+
+        if (this.getClass() != obj.getClass()) return false;
+
+        Vector<?> v = (Vector<?>) obj;
+        if (this.ISLIMITED != v.ISLIMITED) return false;
+        if (this.getSize() != v.getSize()) return false;
+
+        for (int i = 0; i < this.getSize(); i++) {
+            if (this.array[i] != v.array[i]) return false;
+        }
+        return true;
+    }
+    @Override
     public Object clone() throws CloneNotSupportedException{
         return new Vector<V>(array, ISLIMITED);
     }
