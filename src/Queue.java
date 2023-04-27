@@ -21,12 +21,14 @@ public class Queue <Q> implements Cloneable {
         this.queue = queue;
     }
 
+    @SuppressWarnings("unchecked")
     public void push(Q value) throws Exception {
-        this.queue.push(value);
+        this.queue.push((Q) ShallowOrDeepCopy.verifyAndCopy(value));
     }
 
-    public Object peek() {
-        return this.queue.peek(first);
+    @SuppressWarnings("unchecked")    
+    public Q peek() throws Exception {
+        return (Q) ShallowOrDeepCopy.verifyAndCopy(this.queue.peek(first)) ;
     }
 
     public void pop() throws Exception {
@@ -50,10 +52,12 @@ public class Queue <Q> implements Cloneable {
     @Override
     public String toString() {
         String message = "[ ";
-        for (int i = 0; i < this.queue.getSize(); i++) {
-            message += this.queue.peek(i) + " ";
-        }
-        message += "]";
+        try {
+            for (int i = 0; i < this.queue.getSize(); i++) {
+                message += this.queue.peek(i) + " ";
+            }
+            message += "]";
+        } catch (Exception e) { e.getMessage(); }
         return message;
     }
     
