@@ -44,6 +44,7 @@ public class Vector<V> implements Cloneable {
         return true;
     }
 
+    @SuppressWarnings("unchecked")
     public void push(V value) throws Exception {
         int index = this.getFirstFreeIndex();
         if(this.isFull()) {
@@ -57,7 +58,7 @@ public class Vector<V> implements Cloneable {
             catch (Exception e) { } 
         }
         
-        this.set(index, value);
+        this.set(index, (V) ShallowOrDeepCopy.verifyAndCopy(value));
     }
 
     public void set(int index, V value) throws Exception {
@@ -69,8 +70,10 @@ public class Vector<V> implements Cloneable {
         this.array[index] = value;
     }
 
-    public Object peek(int position) {
-        return this.array[position];
+    @SuppressWarnings("unchecked")
+    public V peek(int position) throws Exception {
+        if (position < 0) throw new Exception("Cannot use peek because vector is empty");
+        return (V) ShallowOrDeepCopy.verifyAndCopy(this.array[position]);
     }
 
     public void pop(int position) {
