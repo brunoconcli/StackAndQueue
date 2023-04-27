@@ -18,12 +18,15 @@ public class Stack<S> {
         this.stack = stack;
     }
 
+        @SuppressWarnings("unchecked")
     public void push(Object element) throws Exception {
-        this.stack.push(element);
+        this.stack.push((S) ShallowOrDeepCopy.verifyAndCopy(element));
         this.last ++;
     }
-    public Object peek() {
-        return this.stack.peek(last);
+    
+    @SuppressWarnings("unchecked")
+    public S peek() throws Exception {
+        return (S) ShallowOrDeepCopy.verifyAndCopy(this.stack.peek(stack.getFirstFreeIndex() -1));
     }
     public void pop() throws Exception {
         this.stack.pop(last);
@@ -66,8 +69,11 @@ public class Stack<S> {
     @Override
     public String toString() {
         String message = "";
-        for (int i = 0; i < this.stack.getSize(); i++)
-            message += this.stack.peek(i) + " ";
+        try {
+            for (int i = 0; i < this.stack.getSize(); i++)
+                message += this.stack.peek(i) + " ";
+        }
+        catch(Exception e) { e.getMessage(); }
 
         return message;
     }
